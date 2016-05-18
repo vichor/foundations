@@ -1,5 +1,5 @@
 # FNDTS - foundations
-Basic foundations library. Old code which was wandering on my computer and decided to upload to svn.
+Basic foundations library. Old code which was wandering on my computer and decided to upload to github.
 Contains
   - os abstraction module (only thread available)
   - logging module
