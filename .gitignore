@@ -1,0 +1,6 @@
+.sconsign.dblite
+**/*.swp
+**/*.o
+**/*.os
+deploy/**/*.h
+source/fndts/testfndts

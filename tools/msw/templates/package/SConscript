@@ -1,0 +1,58 @@
+# MSW - My Scons Wrapper
+# Shared library generation
+#
+# @author Victor Garcia <vichor@gmail.com>
+# @date 2011-05-29
+# 
+
+# Find MSW lib
+import sys
+sys.path.append("../../tools/msw")
+import msw
+
+# Library environment
+Import('env')
+envlib = env
+
+# Configuration
+package =  msw.getPackageName()
+modules = [ '.' ]
+envlib['CPPPATH'] = modules
+
+# Dependencies
+#hello = Program('hello.c')
+#goodbye = Program('goodbye.c')
+#Depends(hello, goodbye)
+# in this case goodbye is the dependencies will be built before the target hello
+
+# Get the list of files
+sources = msw.getSources(avoid = 'test')
+
+# Compilation of source
+objects = envlib.SharedObject(sources, CPPPATH = modules)
+
+# Define the creation of the library including all source files found
+lib=envlib.SharedLibrary(package,objects)
+
+# Export binaries
+libdir = "../../deploy/lib" 
+envlib.Install(libdir,lib)
+installdirs = [ libdir ]
+
+# Export headers
+headersinfo = msw.getHeadersDeployInfo()
+headerbasedirs = "../../deploy/include/" + package
+for dir in headersinfo.keys():
+    # find deployment directory for the headers
+    headerdeploydir = headerbasedirs + "/" + dir
+    # add the deployment directory to the list (used to define the aliases)
+    installdirs.append(headerdeploydir)
+    # install the header files
+    for file in headersinfo[dir]:
+        envlib.Install(headerdeploydir,dir+"/"+file)
+
+# Export alias
+envlib.Alias("deploy",  installdirs )
+envlib.Alias("install", installdirs )
+envlib.Alias("export",  installdirs )
+

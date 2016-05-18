@@ -1,0 +1,26 @@
+# MSW - My Scons Wrapper
+# Main Sconstruct file
+#
+# @author Victor Garcia <vichor@gmail.com>
+# @date 2011-05-29
+# 
+
+# Find MSW lib
+import sys
+sys.path.append("../tools/msw")
+import msw
+
+# Environment
+env = Environment()
+
+# Configuration
+packages =  msw.getPackages()
+env['CPPPATH'] = packages
+debug = ARGUMENTS.get('debug', 0)
+if int(debug):
+    env.Append(CCFLAGS = '-g')
+
+# Dependencies
+
+# Compile each package
+SConscript(dirs=packages, exports='env')
