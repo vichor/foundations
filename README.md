@@ -8,4 +8,6 @@ Contains
 This was discontinued years ago, and other alike libraries are available. Use them instead. 
 I have uploaded this just because of romantic reasons.
 
+Besides, this is crap...
+
 Rgds
